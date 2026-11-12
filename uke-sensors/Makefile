@@ -24,15 +24,15 @@ srpm: validate
 	if test ! -s "$$archive"; then curl -fL --retry 3 --connect-timeout 20 "$$url" -o "$$archive.part"; mv "$$archive.part" "$$archive"; fi
 	test "$$(sha256sum "$$archive" | cut -d ' ' -f1)" = "$$hash"
 	top="$$(realpath -m '$(outdir)/rpmbuild')"
-	mkdir -p "$$top"/{SOURCES,SPECS,SRPMS}
-	cp "$$archive" "$$top/SOURCES/$$name"
+	mkdir -p "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild"/{SOURCES,SPECS,SRPMS}
+	cp "$$archive" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/$$name"
 	case '$(PACKAGE)' in
-	libssc) cp patches/libssc/*.patch tests/libssc-light-constructor.cpp tests/libssc-proximity-context.cpp tests/libssc-mount-matrix.sh tests/libssc-proximity-values.sh "$$top/SOURCES/";;
-	uke-ssc-fileservice) cp patches/hexagonrpc/*.patch packaging/systemd/*.service packaging/systemd/iio-ssc-order.conf packaging/systemd/70-uke-ssc.rules src/ssc-cache.cpp tests/hexagon-registry.cpp tests/hexagon-shell.c tests/hexagon-readiness.c "$$top/SOURCES/"; cp tests/ssc-cache.cpp "$$top/SOURCES/ssc-cache-test.cpp";;
+	libssc) cp patches/libssc/*.patch tests/libssc-light-constructor.cpp tests/libssc-proximity-context.cpp tests/libssc-mount-matrix.sh tests/libssc-proximity-values.sh "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/";;
+	uke-ssc-fileservice) cp patches/hexagonrpc/*.patch packaging/systemd/*.service packaging/systemd/iio-ssc-order.conf packaging/systemd/70-uke-ssc.rules src/ssc-cache.cpp tests/hexagon-registry.cpp tests/hexagon-shell.c tests/hexagon-readiness.c "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/"; cp tests/ssc-cache.cpp "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/ssc-cache-test.cpp";;
 	esac
-	cp packaging/$(PACKAGE)/$(PACKAGE).spec "$$top/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir $$top" "$$top/SPECS/$(PACKAGE).spec"
-	install -m644 "$$top/SRPMS/"*.src.rpm '$(outdir)/'
+	cp packaging/$(PACKAGE)/$(PACKAGE).spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
+	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/$(PACKAGE).spec"
+	install -m644 "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SRPMS/"*.src.rpm '$(outdir)/'
 .PHONY: touchscreen-srpm
 .PHONY: front-color-srpm test-front-color
 build/uke-front-color: src/front-color.cpp src/front-color-state.hpp src/front-color-file.hpp src/ssc-discovery.cpp src/ssc-sample.cpp
@@ -44,14 +44,14 @@ test-front-color: build/uke-front-color
 front-color-srpm: outdir = $(CURDIR)/build/front-color-rpmbuild
 front-color-srpm:
 	top="$$(realpath -m '$(outdir)')"
-	mkdir -p "$$top"/{SOURCES,SPECS,SRPMS}
+	mkdir -p "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild"/{SOURCES,SPECS,SRPMS}
 	tar --sort=name --mtime=@1792270800 --owner=0 --group=0 --numeric-owner \
-	 --transform='s#^#uke-front-color-0.1.0/#' -czf "$$top/SOURCES/uke-front-color-0.1.0.tar.gz" \
+	 --transform='s#^#uke-front-color-0.1.0/#' -czf "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/uke-front-color-0.1.0.tar.gz" \
 	 src/front-color.cpp src/front-color-state.hpp src/front-color-file.hpp src/ssc-discovery.cpp src/ssc-sample.cpp \
 	 tests/front-color.cpp packaging/uke-front-color/uke-front-color.spec packaging/systemd/uke-front-color.service \
 	 packaging/systemd/90-uke-front-color.preset docs/FRONT-COLOR.md Makefile LICENSE
-	cp packaging/uke-front-color/uke-front-color.spec "$$top/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir $$top" "$$top/SPECS/uke-front-color.spec"
+	cp packaging/uke-front-color/uke-front-color.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
+	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-front-color.spec"
 test-proximity-capture:
 	mkdir -p build
 	$(CXX) $(CXXFLAGS) -std=c++20 -O2 -Wall -Wextra -Werror $(LDFLAGS) src/ssc-proximity-capture.cpp -o build/uke-proximity-capture
@@ -61,21 +61,21 @@ test-proximity-capture:
 proximity-capture-srpm: outdir = $(CURDIR)/build/proximity-capture-rpmbuild
 proximity-capture-srpm:
 	top="$$(realpath -m '$(outdir)')"
-	mkdir -p "$$top"/{SOURCES,SPECS,SRPMS}
+	mkdir -p "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild"/{SOURCES,SPECS,SRPMS}
 	tar --sort=name --mtime=@1792702800 --owner=0 --group=0 --numeric-owner \
-	 --transform='s#^#uke-proximity-capture-0.1.0/#' -cJf "$$top/SOURCES/uke-proximity-capture-0.1.0.tar.xz" \
+	 --transform='s#^#uke-proximity-capture-0.1.0/#' -cJf "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/uke-proximity-capture-0.1.0.tar.xz" \
 	 src/ssc-proximity-capture.cpp src/ssc-discovery.cpp tests/proximity-capture.cpp \
 	 docs/PROXIMITY-CAPTURE.md Makefile LICENSE
-	cp packaging/uke-proximity-capture/uke-proximity-capture.spec "$$top/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir $$top" "$$top/SPECS/uke-proximity-capture.spec"
+	cp packaging/uke-proximity-capture/uke-proximity-capture.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
+	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-proximity-capture.spec"
 touchscreen-srpm:
 	test -s src/upstream/nt36532-thp/nvt_touch_core.cpp
-	top="$$(realpath -m build/rpmbuild)"; mkdir -p "$$top"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS}
+	top="$$(realpath -m build/rpmbuild)"; mkdir -p "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS}
 	tar --sort=name --mtime=@1791024250 --owner=0 --group=0 --numeric-owner \
-	 --transform='s#^#uke-touchscreen-0.1.0/#' -cJf "$$top/SOURCES/uke-touchscreen-0.1.0.tar.xz" \
+	 --transform='s#^#uke-touchscreen-0.1.0/#' -cJf "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/uke-touchscreen-0.1.0.tar.xz" \
  src/touch-* src/upstream/nt36532-thp src/units src/modules-load.d src/modprobe.d src/udev tests/touch-input.cpp tests/touch-normal-probe.cpp tests/touch-assignment.cpp LICENSE.GPL-3.0
-	cp packaging/uke-touchscreen.spec "$$top/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir $$top" "$$top/SPECS/uke-touchscreen.spec"
+	cp packaging/uke-touchscreen.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
+	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-touchscreen.spec"
 touchscreen-rpm: touchscreen-srpm
 	test "$$(uname -m)" = aarch64
 	rpmbuild -ba --define "_topdir $$(realpath -m build/rpmbuild)" "$$(realpath -m build/rpmbuild)/SPECS/uke-touchscreen.spec"
@@ -170,9 +170,9 @@ local-touch-data:
 	command -v rpmbuild >/dev/null || { echo 'rpmbuild is required for local-touch-data' >&2; exit 2; }
 	top="$$(realpath -m build/local-touch-data-rpm)"
 	src="$$(realpath -m build/local-touch-data-sources)"
-	mkdir -p "$$top"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS} "$$src"
+	mkdir -p "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS} "$$src"
 	install -m600 ../xiaomi-uke-firmware/payload/oem-os3.0.304.0/touch/csot/normal.bin "$$src/normal.bin"
 	install -m600 ../xiaomi-uke-firmware/payload/oem-os3.0.304.0/touch/csot/config.ini "$$src/config.ini"
 	install -m600 ../xiaomi-uke-firmware/payload/oem-os3.0.304.0/touch/reference.bin "$$src/reference.bin"
-	cp packaging/uke-local-touch-data.spec "$$top/SPECS/"
-	rpmbuild -bb --nodeps --target aarch64 --define "_topdir $$top" --define "_sourcedir $$src" "$$top/SPECS/uke-local-touch-data.spec"
+	cp packaging/uke-local-touch-data.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
+	rpmbuild -bb --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" --define "_sourcedir $$src" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-local-touch-data.spec"
