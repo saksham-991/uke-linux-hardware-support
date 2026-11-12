@@ -31,7 +31,7 @@ srpm: validate
 	uke-ssc-fileservice) cp patches/hexagonrpc/*.patch packaging/systemd/*.service packaging/systemd/iio-ssc-order.conf packaging/systemd/70-uke-ssc.rules src/ssc-cache.cpp tests/hexagon-registry.cpp tests/hexagon-shell.c tests/hexagon-readiness.c "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/"; cp tests/ssc-cache.cpp "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/ssc-cache-test.cpp";;
 	esac
 	cp packaging/$(PACKAGE)/$(PACKAGE).spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/$(PACKAGE).spec"
+	rpmbuild -bs -v --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/$(PACKAGE).spec"
 	install -m644 "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SRPMS/"*.src.rpm '$(outdir)/'
 .PHONY: touchscreen-srpm
 .PHONY: front-color-srpm test-front-color
@@ -51,7 +51,7 @@ front-color-srpm:
 	 tests/front-color.cpp packaging/uke-front-color/uke-front-color.spec packaging/systemd/uke-front-color.service \
 	 packaging/systemd/90-uke-front-color.preset docs/FRONT-COLOR.md Makefile LICENSE
 	cp packaging/uke-front-color/uke-front-color.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-front-color.spec"
+	rpmbuild -bs -v --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-front-color.spec"
 test-proximity-capture:
 	mkdir -p build
 	$(CXX) $(CXXFLAGS) -std=c++20 -O2 -Wall -Wextra -Werror $(LDFLAGS) src/ssc-proximity-capture.cpp -o build/uke-proximity-capture
@@ -67,7 +67,7 @@ proximity-capture-srpm:
 	 src/ssc-proximity-capture.cpp src/ssc-discovery.cpp tests/proximity-capture.cpp \
 	 docs/PROXIMITY-CAPTURE.md Makefile LICENSE
 	cp packaging/uke-proximity-capture/uke-proximity-capture.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-proximity-capture.spec"
+	rpmbuild -bs -v --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-proximity-capture.spec"
 touchscreen-srpm:
 	test -s src/upstream/nt36532-thp/nvt_touch_core.cpp
 	top="$$(realpath -m build/rpmbuild)"; mkdir -p "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS}
@@ -75,7 +75,7 @@ touchscreen-srpm:
 	 --transform='s#^#uke-touchscreen-0.1.0/#' -cJf "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/uke-touchscreen-0.1.0.tar.xz" \
  src/touch-* src/upstream/nt36532-thp src/units src/modules-load.d src/modprobe.d src/udev tests/touch-input.cpp tests/touch-normal-probe.cpp tests/touch-assignment.cpp LICENSE.GPL-3.0
 	cp packaging/uke-touchscreen.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
-	rpmbuild -bs --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-touchscreen.spec"
+	rpmbuild -bs -v --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-touchscreen.spec"
 touchscreen-rpm: touchscreen-srpm
 	test "$$(uname -m)" = aarch64
 	rpmbuild -ba --define "_topdir $$(realpath -m build/rpmbuild)" "$$(realpath -m build/rpmbuild)/SPECS/uke-touchscreen.spec"
