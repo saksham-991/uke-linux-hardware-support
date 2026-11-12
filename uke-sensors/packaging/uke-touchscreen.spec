@@ -44,7 +44,7 @@ timeout 15 bash -c 'ulimit -v 262144; exec ./touch-assignment-contract'
 
 %install
 install -Dm755 uke-touch-thp %{buildroot}%{_libexecdir}/senemos-uke/uke-touch-thp
-install -Dm644 src/units/uke-touchscreen.service %{buildroot}%{_unitdir}/uke-touchscreen.service
+install -Dm644 src/units/uke-touchscreen.service %{buildroot}/usr/lib/systemd/system/uke-touchscreen.service
 install -Dm644 src/units/80-uke-touchscreen.preset %{buildroot}/usr/lib/systemd/system-preset/80-uke-touchscreen.preset
 install -Dm644 src/modules-load.d/uke-touchscreen.conf %{buildroot}/usr/lib/modules-load.d/uke-touchscreen.conf
 install -Dm644 src/modprobe.d/uke-touchscreen.conf %{buildroot}/usr/lib/modprobe.d/uke-touchscreen.conf
@@ -53,17 +53,17 @@ install -Dm644 src/upstream/nt36532-thp/LICENSE %{buildroot}/usr/share/licenses/
 install -Dm644 LICENSE.GPL-3.0 %{buildroot}/usr/share/licenses/%{name}/GPL-3.0
 
 %post
-%systemd_post uke-touchscreen.service
+systemctl preset uke-touchscreen.service
 
 %preun
-%systemd_preun uke-touchscreen.service
+systemctl disable uke-touchscreen.service
 
 %postun
-%systemd_postun_with_restart uke-touchscreen.service
+systemctl presetun_with_restart uke-touchscreen.service
 
 %files
 %{_libexecdir}/senemos-uke/uke-touch-thp
-%{_unitdir}/uke-touchscreen.service
+/usr/lib/systemd/system/uke-touchscreen.service
 /usr/lib/systemd/system-preset/80-uke-touchscreen.preset
 /usr/lib/modules-load.d/uke-touchscreen.conf
 /usr/lib/modprobe.d/uke-touchscreen.conf

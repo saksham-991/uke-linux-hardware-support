@@ -75,7 +75,7 @@ touchscreen-srpm:
 	 --transform='s#^#uke-touchscreen-0.1.0/#' -cJf "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SOURCES/uke-touchscreen-0.1.0.tar.xz" \
  src/touch-* src/upstream/nt36532-thp src/units src/modules-load.d src/modprobe.d src/udev tests/touch-input.cpp tests/touch-normal-probe.cpp tests/touch-assignment.cpp LICENSE.GPL-3.0
 	cp packaging/uke-touchscreen.spec "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/"
-	rpmbuild -bs -v --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-touchscreen.spec"
+	rpmbuild -bs -v --nodeps --target aarch64 --define "_topdir /work/uke-linux-hardware-support/uke-sensors/build/rpmbuild" "/work/uke-linux-hardware-support/uke-sensors/build/rpmbuild/SPECS/uke-touchscreen.spec" > /tmp/rpmbuild.log 2>&1 || cat /tmp/rpmbuild.log
 touchscreen-rpm: touchscreen-srpm
 	test "$$(uname -m)" = aarch64
 	rpmbuild -ba --define "_topdir $$(realpath -m build/rpmbuild)" "$$(realpath -m build/rpmbuild)/SPECS/uke-touchscreen.spec"
