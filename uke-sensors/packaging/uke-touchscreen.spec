@@ -59,7 +59,7 @@ systemctl preset uke-touchscreen.service
 systemctl disable uke-touchscreen.service
 
 %postun
-systemctl presetun_with_restart uke-touchscreen.service
+systemctl try-restart uke-touchscreen.service
 
 %files
 %{_libexecdir}/senemos-uke/uke-touch-thp
