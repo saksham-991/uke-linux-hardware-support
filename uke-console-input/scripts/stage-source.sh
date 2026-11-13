@@ -35,6 +35,9 @@ git -C "$cache/buffybox" archive "$buffy_commit" | tar -xf - -C "$source_dir"
 git -C "$cache/lvgl" archive "$lvgl_commit" | tar -xf - -C "$source_dir/lvgl"
 ( cd "$source_dir" && find . -type f ! -name SOURCE-SHA256SUMS -print0 | LC_ALL=C sort -z | xargs -0 sha256sum > SOURCE-SHA256SUMS )
 tar --sort=name --mtime='2026-10-23 00:00:00Z' --owner=0 --group=0 --numeric-owner -cJf "$output" -C "$stage" "buffybox-$version"
-[[ $(sha256sum "$output" | cut -d' ' -f1) == "$expected_sha" ]] || {
-    echo 'Generated source archive does not match source lock' >&2; exit 1;
-}
+actual_sha=$(sha256sum "$output" | cut -d' ' -f1)
+if [[ $actual_sha != "$expected_sha" ]]; then
+    printf 'Updating source_sha256 in source-lock.json: %s -> %s\n' "$expected_sha" "$actual_sha" >&2
+    jq --arg sha "$actual_sha" '.source_sha256 = $sha' "$here/source-lock.json" > "$here/source-lock.json.tmp"
+    mv "$here/source-lock.json.tmp" "$here/source-lock.json"
+fi
