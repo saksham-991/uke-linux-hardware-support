@@ -4,7 +4,7 @@ set -Eeuo pipefail
 component=${1:?component required}
 destination=${2:?absolute output directory required}
 case $component in
-    uke-boot|uke-core-meta) ;;
+    uke-boot|uke-core-meta|uke-platform-runtime) ;;
     *) echo "Unsupported Fedora 44 source component: $component" >&2; exit 2;;
 esac
 
@@ -24,4 +24,4 @@ if [[ $component == uke-boot ]]; then
     paths+=(uke-desktop-integration packaging/families)
 fi
 git -C "$repo" -c "safe.directory=$repo" archive "$source_commit" "${paths[@]}" | tar -xf - -C "$tmp"
-make -C "$tmp/$component" srpm outdir="$destination"
+make -C "$tmp/$component" FEDORA44_LEGACY=0 srpm outdir="$destination"

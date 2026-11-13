@@ -57,7 +57,7 @@ test-usb:
 	bash tests/usb-auto.sh
 	bash tests/usb-ownership.sh
 srpm: validate
-	if [[ '$(FEDORA44_LEGACY)' == 1 ]]; then bash ../packaging/fedora44/legacy-srpm.sh uke-boot '$(outdir)'; exit 0; fi
+	if [[ '$(FEDORA44_LEGACY)' == 1 || '$${FEDORA_RELEASE:-}' == '44' ]]; then bash ../packaging/fedora44/legacy-srpm.sh uke-boot '$(outdir)'; exit 0; fi
 	top="$$(realpath -m "$(outdir)/rpmbuild")"
 	mkdir -p "$$top"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS}
 	manifest=../uke-sensors/manifests/touch-runtime-source.json
