@@ -3,6 +3,10 @@ Version: 3.0.304.0
 Release: 2%{?dist}
 Summary: Xiaomi Pad 7 model firmware and SSC configuration from OS3.0.304.0
 License: LicenseRef-Proprietary
+Provides: uke-firmware = %{version}-%{release}
+Provides: uke-firmware = %{version}
+Provides: xiaomi-uke-firmware = %{version}-%{release}
+Provides: xiaomi-uke-firmware = %{version}
 Source0: %{name}-%{version}.tar.gz
 BuildArch: noarch
 
