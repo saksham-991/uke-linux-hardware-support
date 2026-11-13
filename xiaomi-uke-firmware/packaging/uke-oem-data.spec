@@ -37,6 +37,7 @@ cp -a firmware/. %{buildroot}%{_prefix}/lib/firmware/
 %{_prefix}/lib/firmware/adsp_dtb.*
 %{_prefix}/lib/firmware/qca6750
 %{_prefix}/lib/firmware/qcom/gen71100_*
+%{_prefix}/lib/firmware/qcom/vpu
 %{_prefix}/lib/firmware/ath11k/WCN6750/hw1.0
 
 %changelog
