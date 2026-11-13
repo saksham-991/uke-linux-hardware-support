@@ -68,7 +68,7 @@ install: all
 	install -Dm644 manifests/battery-profile.json "$(DESTDIR)$(prefix)/share/uke-battery/battery-profile.json"
 	install -Dm644 manifests/model-profile.json "$(DESTDIR)$(prefix)/share/uke-battery/model-profile.json"
 srpm:
-	if [[ '$(FEDORA44_LEGACY)' == 1 || '$${FEDORA_RELEASE:-}' == '44' ]]; then bash ../packaging/fedora44/legacy-srpm.sh uke-platform-runtime '$(outdir)'; exit 0; fi
+	if [[ '$(FEDORA44_LEGACY)' == 1 || '$(FEDORA_RELEASE)' == 44 || "$${FEDORA_RELEASE:-}" == '44' ]]; then bash ../packaging/fedora44/legacy-srpm.sh uke-platform-runtime '$(outdir)'; exit 0; fi
 	mkdir -p "$(outdir)/rpmbuild"/{BUILD,BUILDROOT,RPMS,SRPMS,SOURCES,SPECS}
 	# Package exactly the reviewed worktree, with a per-file byte inventory.
 	stage=$$(mktemp -d)
