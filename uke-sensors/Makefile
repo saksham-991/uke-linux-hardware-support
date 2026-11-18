@@ -17,7 +17,7 @@ srpm: validate
 		exit 0
 	fi
 	case '$(PACKAGE)' in
-	libssc) archive=source-cache/libssc/libssc-v0.4.4.tar.gz; url=https://deb.debian.org/debian/pool/main/libs/libssc/libssc_0.4.4.orig.tar.gz; hash=716d6bd6b34d2d753060c6b54c9a87e34fae75b724c763bf9ef487efa3621587; name=libssc-v0.4.4.tar.gz;;
+	libssc) archive=source-cache/libssc/libssc-v0.4.4.tar.gz; url=https://codeberg.org/DylanVanAssche/libssc/archive/v0.4.4.tar.gz; hash=716d6bd6b34d2d753060c6b54c9a87e34fae75b724c763bf9ef487efa3621587; name=libssc-v0.4.4.tar.gz;;
 	uke-ssc-fileservice) archive=source-cache/hexagonrpc-write/source.tar.gz; url=https://api.github.com/repos/linux-msm/hexagonrpc/tarball/510c87e5c89026ee2bd2034776fc4d15994f353d; hash=ed7b0e704a5e8c20b77b013b4b34f3cddbe41d4cf546edc73f029501f7ebdec5; name=hexagonrpc-510c87e5.tar.gz;;
 	esac
 	mkdir -p "$$(dirname "$$archive")"
