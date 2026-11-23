@@ -60,6 +60,7 @@ test ! -e %{buildroot}/var/lib/uke-touch
 %doc LOCAL-ONLY.txt local-firmware-candidates.json oem-runtime-source.json
 /usr/share/uke-sensors
 /usr/lib/firmware/adsp.*
+/usr/lib/firmware/adsp2.*
 /usr/lib/firmware/adsp_dtb.*
 /usr/lib/firmware/ath11k/WCN6750/hw1.0/board.bin
 /usr/lib/firmware/ath11k/WCN6750/hw1.0/regdb.bin
@@ -68,6 +69,7 @@ test ! -e %{buildroot}/var/lib/uke-touch
 /usr/lib/firmware/qcom/uke/sensors
 /usr/lib/firmware/qcom/uke/touch
 /usr/lib/firmware/qca
+/usr/lib/firmware/camera
 
 %changelog
 * Tue Oct 20 2026 Uke Maintainers <75160848+MCC45TR@users.noreply.github.com> - 3.0.304.0-1.local
