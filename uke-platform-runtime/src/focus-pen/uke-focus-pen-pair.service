@@ -1,0 +1,13 @@
+[Unit]
+Description=Register a docked Xiaomi Focus Pen
+Wants=bluetooth.service
+After=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/libexec/uke-focus-pen/pair
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target
