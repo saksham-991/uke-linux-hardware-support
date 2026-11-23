@@ -39,6 +39,10 @@ cp -a firmware/. %{buildroot}%{_prefix}/lib/firmware/
 %{_prefix}/lib/firmware/qca
 %{_prefix}/lib/firmware/adsp.*
 %{_prefix}/lib/firmware/adsp2.*
+%{_prefix}/lib/firmware/adsp2_dtb.*
+%{_prefix}/lib/firmware/adspr.jsn
+%{_prefix}/lib/firmware/adsps.jsn
+%{_prefix}/lib/firmware/adspua.jsn
 %{_prefix}/lib/firmware/adsp_dtb.*
 %{_prefix}/lib/firmware/camera
 %{_prefix}/lib/firmware/qca6750
