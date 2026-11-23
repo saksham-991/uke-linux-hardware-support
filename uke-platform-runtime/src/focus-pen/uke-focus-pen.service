@@ -1,0 +1,13 @@
+[Unit]
+Description=Xiaomi Pad 7 Focus Pen input
+After=bluetooth.service systemd-udevd.service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/sbin/modprobe uinput
+ExecStart=/usr/libexec/uke-focus-pen/input
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=multi-user.target
