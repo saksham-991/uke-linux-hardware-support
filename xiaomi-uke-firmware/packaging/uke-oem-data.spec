@@ -38,7 +38,9 @@ cp -a firmware/. %{buildroot}%{_prefix}/lib/firmware/
 %{_prefix}/lib/firmware/qcom/uke/sensors
 %{_prefix}/lib/firmware/qca
 %{_prefix}/lib/firmware/adsp.*
+%{_prefix}/lib/firmware/adsp2.*
 %{_prefix}/lib/firmware/adsp_dtb.*
+%{_prefix}/lib/firmware/camera
 %{_prefix}/lib/firmware/qca6750
 %{_prefix}/lib/firmware/qcom/gen71100_*
 %{_prefix}/lib/firmware/qcom/vpu
